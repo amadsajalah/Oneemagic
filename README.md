@@ -80,9 +80,15 @@ Visit `http://127.0.0.1:8000` to witness the magic! 🎩
 
 ## 📐 System Architecture (The Blueprints)
 
-The hidden mechanics behind the platform can be found in our comprehensive documentation diagrams (ERD, DFD, Use Case, CDM/PDM). 
+The hidden mechanics behind the platform can be found in our comprehensive documentation diagrams:
 
-👉 **[View Diagram Documentation](diagram_documentation.md)**
+- [ERD (Entity Relationship Diagram)](diagram%20oneemagic-ERD.drawio.png)
+- [CDM (Conceptual Data Model)](diagram%20oneemagic-CDM.drawio.png)
+- [PDM (Physical Data Model)](diagram%20oneemagic-PDM.drawio.png)
+- [Context Diagram (DFD Level 0)](diagram%20oneemagic-Context%20Diagram.drawio.png)
+- [DFD Level 1](diagram%20oneemagic-DFD.drawio.png)
+- [Flowchart](diagram%20oneemagic-FlowChart.drawio.png)
+- [Use Case Diagram](diagram%20oneemagic-Use%20Case.drawio.png)
 
 ---
 
