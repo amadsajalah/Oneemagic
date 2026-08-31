@@ -289,11 +289,10 @@
         // Inisialisasi Map (Pusat default: Jakarta)
         const map = L.map('map_picker').setView([-6.2088, 106.8456], 13);
         
-        // Dark theme map tiles (CartoDB Dark Matter)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            subdomains: 'abcd',
-            maxZoom: 19
+        // Dark theme map tiles (Esri World Dark Gray Base - No API Key Required)
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+            maxZoom: 16
         }).addTo(map);
 
         let marker = null;
