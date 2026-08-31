@@ -412,7 +412,7 @@ function openLabModal(el){
     document.getElementById('modal-history').innerHTML =
         paras.map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
 
-    document.getElementById('modal-portfolio-link').href = `{{ route('portfolio.index') }}?category=${el.dataset.slug}`;
+    document.getElementById('modal-portfolio-link').href = `{{ route('portfolio.index') }}`;
 
     document.getElementById('lab-modal').classList.add('active');
     document.body.style.overflow='hidden';
