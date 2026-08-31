@@ -97,12 +97,13 @@
             <style>
                 .magician-slideshow {
                     position: relative;
-                    width: 22rem;
+                    width: 100%;
+                    max-width: 22rem;
                     height: 420px;
                     margin: 0 auto;
                 }
                 @media (min-width: 768px) {
-                    .magician-slideshow { width: 26rem; height: 500px; }
+                    .magician-slideshow { max-width: 26rem; height: 500px; }
                 }
                 .magician-spotlight {
                     position: absolute; top: 50%; left: 50%;

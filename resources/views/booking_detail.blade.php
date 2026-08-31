@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Ruang Pribadi — OneeMagic')
+@section('title', 'Detail Reservasi — OneeMagic')
 
 @section('content')
 <style>
@@ -29,7 +29,7 @@
     .file-upload-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; }
 </style>
 
-<div style="min-height:100vh;padding-top:2rem;padding-bottom:5rem;position:relative;">
+<div style="min-height:100vh;padding-top:6rem;padding-bottom:5rem;position:relative;">
 
     <div style="max-width:72rem;margin:0 auto;padding:0 1.5rem;position:relative;z-index:10;">
         
