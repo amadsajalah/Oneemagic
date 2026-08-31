@@ -111,7 +111,11 @@
                     <div class="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-slate-500">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                     </div>
-                    <p class="text-xl text-slate-400 font-serif">Belum ada karya di Magic Lab.</p>
+                    <p class="text-xl text-slate-400 font-serif mb-2">Belum ada karya di kategori ini.</p>
+                    <p class="text-sm text-slate-600 mb-6">Pertunjukan untuk kategori ini sedang disiapkan sang magician.</p>
+                    <a href="{{ route('portfolio.index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-semibold hover:bg-amber-500/20 transition-colors">
+                        ✨ Lihat Semua Pertunjukan
+                    </a>
                 </div>
             @endforelse
         </div>
