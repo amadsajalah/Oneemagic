@@ -18,9 +18,6 @@ class PublicPortfolioController extends Controller
 
         if ($request->has('category')) {
             $activeCategory = Category::where('slug', $request->category)->first();
-            if ($activeCategory) {
-                $query->where('category_id', $activeCategory->id);
-            }
         }
 
         $portfolios = $query->get();
