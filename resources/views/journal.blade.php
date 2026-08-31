@@ -19,8 +19,29 @@
                             @if($journal->image_path && file_exists(public_path('storage/'.$journal->image_path)))
                                 <img src="{{ asset('storage/'.$journal->image_path) }}" alt="{{ $journal->title }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
                             @else
-                                <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-[#111] flex items-center justify-center">
-                                    <svg class="w-12 h-12 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                                @php
+                                    $bgColors = [
+                                        'from-amber-900/40',
+                                        'from-indigo-900/40',
+                                        'from-rose-900/40',
+                                        'from-emerald-900/40',
+                                        'from-purple-900/40'
+                                    ];
+                                    $iconColors = [
+                                        'text-amber-500 border-amber-500/30 bg-amber-500/10',
+                                        'text-indigo-400 border-indigo-400/30 bg-indigo-400/10',
+                                        'text-rose-400 border-rose-400/30 bg-rose-400/10',
+                                        'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
+                                        'text-purple-400 border-purple-400/30 bg-purple-400/10'
+                                    ];
+                                    $bg = $bgColors[$loop->index % 5];
+                                    $icon = $iconColors[$loop->index % 5];
+                                @endphp
+                                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] {{ $bg }} via-[#0a0a0a] to-[#050505] flex flex-col items-center justify-center p-6 text-center">
+                                    <div class="w-16 h-16 rounded-full border flex items-center justify-center mb-3 {{ $icon }} transition-transform group-hover:scale-110 duration-500 shadow-xl">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                    </div>
+                                    <span class="font-serif italic text-white/40 text-sm tracking-wide">OneeMagic Journal</span>
                                 </div>
                             @endif
                         </div>
