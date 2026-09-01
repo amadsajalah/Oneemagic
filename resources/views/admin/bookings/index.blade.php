@@ -16,18 +16,16 @@
         .input-field:focus { outline: none; border-color: rgba(217,119,6,0.5); }
         .input-field option { background-color: #080810; color: #f1f5f9; }
         .input-field::placeholder { color: rgba(148,163,184,0.4); }
-        /* Mobile sidebar overlay */
-        #mobile-sidebar-overlay { display: none; }
-        #mobile-sidebar-overlay.open { display: block; }
+        /* Mobile sidebar */
         #mobile-sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
-        #mobile-sidebar.open { transform: translateX(0); }
+        #mobile-sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 40; }
     </style>
 </head>
 <body class="antialiased text-slate-200">
     <x-toast />
 
     {{-- MOBILE SIDEBAR OVERLAY --}}
-    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden" onclick="closeSidebar()"></div>
+    <div id="mobile-sidebar-overlay" onclick="closeSidebar()"></div>
 
     {{-- MOBILE SIDEBAR (slide-in from left) --}}
     <aside id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 sidebar-bg w-64 flex flex-col md:hidden overflow-y-auto">
@@ -329,13 +327,13 @@
 
     <script>
         function openSidebar() {
-            document.getElementById('mobile-sidebar').classList.add('open');
-            document.getElementById('mobile-sidebar-overlay').classList.add('open');
+            document.getElementById('mobile-sidebar').style.transform = 'translateX(0)';
+            document.getElementById('mobile-sidebar-overlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
         function closeSidebar() {
-            document.getElementById('mobile-sidebar').classList.remove('open');
-            document.getElementById('mobile-sidebar-overlay').classList.remove('open');
+            document.getElementById('mobile-sidebar').style.transform = 'translateX(-100%)';
+            document.getElementById('mobile-sidebar-overlay').style.display = 'none';
             document.body.style.overflow = '';
         }
     </script>
