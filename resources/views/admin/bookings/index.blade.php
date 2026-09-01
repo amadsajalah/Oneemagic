@@ -160,8 +160,79 @@
                     @endif
                 </form>
 
-                {{-- Table with horizontal scroll for mobile --}}
-                <div class="card rounded-xl overflow-hidden">
+                {{-- MOBILE CARD LIST (visible on mobile only) --}}
+                <div class="md:hidden space-y-3 mb-4">
+                    @forelse($bookings as $booking)
+                        <div class="card rounded-xl p-4 space-y-3">
+                            {{-- Header row: Name + Status --}}
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <p class="text-sm font-semibold text-white">{{ $booking->user->name ?? '—' }}</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">{{ $booking->user->email ?? '' }}</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    @if($booking->status === 'pending')
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/10 text-yellow-400 ring-1 ring-yellow-400/20"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse inline-block"></span>Menunggu</span>
+                                    @elseif($booking->status === 'approved')
+                                        @if($booking->payment_status === 'paid')
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-400/10 text-green-400 ring-1 ring-green-400/20"><span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>Lunas & Fix</span>
+                                        @elseif($booking->payment_status === 'verifying')
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-400/10 text-blue-400 ring-1 ring-blue-400/20"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block"></span>Cek Bayar</span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-400/10 text-indigo-400 ring-1 ring-indigo-400/20"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>Tunggu Bayar</span>
+                                        @endif
+                                    @elseif($booking->status === 'paid')
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-400/10 text-green-400 ring-1 ring-green-400/20"><span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>Lunas & Fix</span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-400/10 text-red-400 ring-1 ring-red-400/20"><span class="w-1.5 h-1.5 rounded-full bg-red-400 inline-block"></span>Ditolak</span>
+                                    @endif
+                                </div>
+                            </div>
+                            {{-- Event info --}}
+                            <div class="border-t border-white/5 pt-3 grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                    <p class="text-slate-500 mb-0.5">Acara</p>
+                                    <p class="text-slate-200 font-medium">{{ Str::limit($booking->event_name, 25) }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-slate-500 mb-0.5">Tanggal</p>
+                                    <p class="text-slate-200 font-medium">{{ \Carbon\Carbon::parse($booking->event_date)->format('d M Y') }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-slate-500 mb-0.5">Waktu</p>
+                                    <p class="text-slate-200">{{ $booking->event_time }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-slate-500 mb-0.5">Tamu</p>
+                                    <p class="text-slate-200">{{ $booking->guest_count ?? '-' }} orang</p>
+                                </div>
+                            </div>
+                            {{-- Actions --}}
+                            <div class="border-t border-white/5 pt-3 flex flex-wrap gap-2">
+                                <a href="{{ route('admin.bookings.show', $booking) }}" class="flex-1 text-center text-[11px] font-medium text-amber-500 border border-amber-500/30 px-3 py-2 rounded-lg transition-all hover:bg-amber-500/10">
+                                    👁 Detail & Chat
+                                </a>
+                                @if($booking->status === 'pending')
+                                    <form action="{{ route('admin.bookings.updateStatus', $booking) }}" method="POST" class="flex-1">
+                                        @csrf @method('PATCH')
+                                        <input type="hidden" name="status" value="approved">
+                                        <button class="w-full text-[11px] font-medium text-green-400 border border-green-400/30 px-3 py-2 rounded-lg transition-all hover:bg-green-400/10">✓ Terima</button>
+                                    </form>
+                                    <form action="{{ route('admin.bookings.updateStatus', $booking) }}" method="POST" class="flex-1">
+                                        @csrf @method('PATCH')
+                                        <input type="hidden" name="status" value="rejected">
+                                        <button class="w-full text-[11px] font-medium text-red-400 border border-red-400/30 px-3 py-2 rounded-lg transition-all hover:bg-red-400/10">✗ Tolak</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <div class="card rounded-xl py-16 text-center text-sm text-slate-600">Belum ada data pemesanan.</div>
+                    @endforelse
+                </div>
+
+                {{-- DESKTOP TABLE (hidden on mobile) --}}
+                <div class="hidden md:block card rounded-xl overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="min-w-full" style="min-width: 700px;">
                             <thead>
@@ -238,6 +309,12 @@
                         <div class="px-5 py-3 border-t border-white/5">{{ $bookings->links() }}</div>
                     @endif
                 </div>
+
+                {{-- Pagination for mobile --}}
+                @if($bookings->hasPages())
+                    <div class="md:hidden mt-4">{{ $bookings->links() }}</div>
+                @endif
+
             </main>
         </div>
     </div>
