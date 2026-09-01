@@ -325,13 +325,14 @@
 
             <!-- Panel -->
             <div x-show="mobileMenuOpen"
-                 x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700"
+                 x-transition:enter="transform transition ease-in-out duration-300"
                  x-transition:enter-start="translate-x-full"
                  x-transition:enter-end="translate-x-0"
-                 x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700"
+                 x-transition:leave="transform transition ease-in-out duration-300"
                  x-transition:leave-start="translate-x-0"
                  x-transition:leave-end="translate-x-full"
-                 class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto border-l border-white/5 bg-[#0a0a0f] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
+                 class="fixed inset-y-0 right-0 z-[100] w-full overflow-y-auto border-l border-white/10 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10"
+                 style="background-color: #050508;">
                 
                 <div class="flex items-center justify-between">
                     <a href="#" class="-m-1.5 p-1.5">
@@ -345,35 +346,35 @@
                     </button>
                 </div>
                 
-                <div class="mt-10 flow-root">
+                <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-white/10">
                         <div class="space-y-2 py-6">
-                                <a href="{{ route('home') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-white/5 transition-colors">Beranda</a>
+                                <a href="{{ route('home') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Beranda</a>
                                 @auth
-                                    <a href="{{ route('magic_lab.index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-white/5 transition-colors">Magic Lab</a>
-                                    <a href="{{ route('journal.index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-white/5 transition-colors">Jurnal</a>
-                                    <a href="{{ route('booking.create') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-amber-500 hover:bg-white/5 transition-colors">Pemesanan</a>
+                                    <a href="{{ route('magic_lab.index') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Magic Lab</a>
+                                    <a href="{{ route('journal.index') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Jurnal</a>
+                                    <a href="{{ route('booking.create') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 transition-colors">Pemesanan</a>
                                 @else
-                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-white/5 transition-colors">Magic Lab</button>
-                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-white/5 transition-colors">Jurnal</button>
-                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-2 text-base font-semibold leading-7 text-amber-500 hover:bg-white/5 transition-colors">Pemesanan</button>
+                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Magic Lab</button>
+                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Jurnal</button>
+                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 transition-colors">Pemesanan</button>
                                 @endauth
                         </div>
                         <div class="py-6">
                             @auth
                                 <div class="mb-2 text-sm text-slate-400">Halo, <span class="text-amber-500">{{ Auth::user()->name }}</span></div>
                                 @if(Auth::user()->isAdmin())
-                                    <a href="{{ route('admin.dashboard') }}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-amber-500 hover:bg-white/5 hover:text-amber-400 transition-colors">Admin Dasbor</a>
+                                    <a href="{{ route('admin.dashboard') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 hover:text-amber-400 transition-colors">Admin Dasbor</a>
                                 @else
-                                    <a href="{{ route('dashboard') }}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-amber-500 hover:bg-white/5 hover:text-amber-400 transition-colors">Dasbor Saya</a>
+                                    <a href="{{ route('dashboard') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 hover:text-amber-400 transition-colors">Dasbor Saya</a>
                                 @endif
                                 <form method="POST" action="{{ route('logout') }}" class="mt-2">
                                     @csrf
-                                    <button type="submit" class="-mx-3 block w-full text-left rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-slate-300 hover:bg-white/5 hover:text-red-400 transition-colors">Keluar</button>
+                                    <button type="submit" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-slate-400 hover:bg-white/10 hover:text-red-400 transition-colors">Keluar</button>
                                 </form>
                             @else
-                                <a href="{{ route('login') }}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Masuk</a>
-                                <a href="{{ route('register') }}" class="mt-2 block w-full rounded-md bg-amber-600 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-amber-500 transition-colors">Mendaftar</a>
+                                <a href="{{ route('login') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-slate-300 hover:bg-white/10 hover:text-white transition-colors">Masuk</a>
+                                <a href="{{ route('register') }}" class="mt-2 block w-full rounded-md bg-amber-600 px-3 py-3 text-center text-sm font-semibold text-white hover:bg-amber-500 transition-colors">Mendaftar</a>
                             @endauth
                         </div>
                     </div>
