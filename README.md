@@ -10,7 +10,7 @@ Sistem ini dirancang dengan standar industri menggunakan **Laravel 11 REST API +
 
 ## 🎨 Desain Figma & Repository GitHub
 
-- 🎨 **Link Desain Official Figma**: *(Akan ditambahkan oleh amadsajalah)*
+- 🎨 **Link Desain Official Figma**: [**Lihat Desain di Figma →**](https://www.figma.com/design/tD4mFBZngoEPUcObX8kh0u/Untitled?node-id=0-1&t=qW5l70tBHDPLJkGN-1)
 - 🐙 **Repository GitHub**: [**Oneemagic (GitHub)**](https://github.com/amadsajalah/Oneemagic)
 
 ---
