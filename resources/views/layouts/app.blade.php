@@ -307,7 +307,6 @@
 
         <!-- Mobile Menu (Drawer) -->
         <div x-show="mobileMenuOpen" 
-             style="display: none;"
              class="fixed inset-0 z-50"
              x-ref="dialog" 
              aria-modal="true">
