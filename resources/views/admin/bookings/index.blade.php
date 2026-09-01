@@ -141,24 +141,32 @@
                 @endif
 
                 {{-- Search + Sort Bar --}}
-                <form method="GET" action="{{ route('admin.bookings.index') }}" class="card rounded-xl p-4 mb-6 flex flex-wrap items-center gap-3">
+                <form method="GET" action="{{ route('admin.bookings.index') }}" class="card rounded-xl p-4 mb-6 space-y-3 md:space-y-0 md:flex md:flex-wrap md:items-center md:gap-3">
+                    {{-- Search input full width on mobile --}}
                     <input type="text" name="search" value="{{ request('search') }}"
-                           class="input-field rounded-xl px-4 py-2.5 text-sm flex-1 min-w-48"
+                           class="input-field rounded-xl px-4 py-2.5 text-sm w-full md:flex-1 md:min-w-48"
                            placeholder="🔍  Cari nama klien atau acara...">
-                    <select name="sort" class="input-field rounded-xl px-4 py-2.5 text-sm">
-                        <option value="event_date" {{ request('sort')=='event_date'?'selected':'' }}>Tanggal Acara</option>
-                        <option value="created_at" {{ request('sort')=='created_at'?'selected':'' }}>Tanggal Masuk</option>
-                        <option value="status" {{ request('sort')=='status'?'selected':'' }}>Status</option>
-                    </select>
-                    <select name="direction" class="input-field rounded-xl px-4 py-2.5 text-sm">
-                        <option value="asc" {{ request('direction','asc')=='asc'?'selected':'' }}>↑ Ascending</option>
-                        <option value="desc" {{ request('direction')=='desc'?'selected':'' }}>↓ Descending</option>
-                    </select>
-                    <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors" style="background: #d97706;">Terapkan</button>
-                    @if(request()->hasAny(['search','sort','direction']))
-                        <a href="{{ route('admin.bookings.index') }}" class="px-4 py-2.5 rounded-xl text-sm text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors">Reset</a>
-                    @endif
+                    {{-- Sort & direction side by side on mobile --}}
+                    <div class="flex gap-2 w-full md:w-auto md:contents">
+                        <select name="sort" class="input-field rounded-xl px-3 py-2.5 text-sm flex-1 md:flex-none">
+                            <option value="event_date" {{ request('sort')=='event_date'?'selected':'' }}>Tgl Acara</option>
+                            <option value="created_at" {{ request('sort')=='created_at'?'selected':'' }}>Tgl Masuk</option>
+                            <option value="status" {{ request('sort')=='status'?'selected':'' }}>Status</option>
+                        </select>
+                        <select name="direction" class="input-field rounded-xl px-3 py-2.5 text-sm flex-1 md:flex-none">
+                            <option value="asc" {{ request('direction','asc')=='asc'?'selected':'' }}>↑ Asc</option>
+                            <option value="desc" {{ request('direction')=='desc'?'selected':'' }}>↓ Desc</option>
+                        </select>
+                    </div>
+                    {{-- Buttons side by side full width on mobile --}}
+                    <div class="flex gap-2 w-full md:w-auto md:contents">
+                        <button type="submit" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors" style="background: #d97706;">Terapkan</button>
+                        @if(request()->hasAny(['search','sort','direction']))
+                            <a href="{{ route('admin.bookings.index') }}" class="flex-1 md:flex-none text-center px-4 py-2.5 rounded-xl text-sm text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors">Reset</a>
+                        @endif
+                    </div>
                 </form>
+
 
                 {{-- MOBILE CARD LIST (visible on mobile only) --}}
                 <div class="md:hidden space-y-3 mb-4">
