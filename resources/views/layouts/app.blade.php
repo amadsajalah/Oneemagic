@@ -19,6 +19,7 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
+        [x-cloak] { display: none !important; }
         
         .font-serif {
             font-family: 'Playfair Display', serif;
@@ -305,79 +306,61 @@
             </div>
         </nav>
 
-        <!-- Mobile Menu (Drawer) -->
-        <div x-show="mobileMenuOpen" 
-             class="fixed inset-0 z-50"
-             x-ref="dialog" 
-             aria-modal="true">
-             
-            <!-- Backdrop -->
-            <div x-show="mobileMenuOpen"
-                 x-transition:enter="ease-out duration-300"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="ease-in duration-200"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 @click="mobileMenuOpen = false"
-                 class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+        {{-- Mobile Drawer: Backdrop --}}
+        <div x-cloak
+             x-show="mobileMenuOpen"
+             @click="mobileMenuOpen = false"
+             style="position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:998;">
+        </div>
 
-            <!-- Panel -->
-            <div x-show="mobileMenuOpen"
-                 x-transition:enter="transform transition ease-in-out duration-300"
-                 x-transition:enter-start="translate-x-full"
-                 x-transition:enter-end="translate-x-0"
-                 x-transition:leave="transform transition ease-in-out duration-300"
-                 x-transition:leave-start="translate-x-0"
-                 x-transition:leave-end="translate-x-full"
-                 class="fixed inset-y-0 right-0 z-[100] w-full overflow-y-auto border-l border-white/10 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10"
-                 style="background-color: #050508;">
-                
-                <div class="flex items-center justify-between">
-                    <a href="#" class="-m-1.5 p-1.5">
-                        <span class="font-serif text-xl tracking-widest text-white">ONEE<span class="text-amber-500">MAGIC</span></span>
-                    </a>
-                    <button @click="mobileMenuOpen = false" type="button" class="-m-2.5 rounded-md p-2.5 text-slate-400 hover:text-white transition-colors">
-                        <span class="sr-only">Tutup menu</span>
-                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                
-                <div class="mt-6 flow-root">
-                    <div class="-my-6 divide-y divide-white/10">
-                        <div class="space-y-2 py-6">
-                                <a href="{{ route('home') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Beranda</a>
-                                @auth
-                                    <a href="{{ route('magic_lab.index') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Magic Lab</a>
-                                    <a href="{{ route('journal.index') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Jurnal</a>
-                                    <a href="{{ route('booking.create') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 transition-colors">Pemesanan</a>
-                                @else
-                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Magic Lab</button>
-                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white hover:bg-white/10 transition-colors">Jurnal</button>
-                                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 transition-colors">Pemesanan</button>
-                                @endauth
-                        </div>
-                        <div class="py-6">
-                            @auth
-                                <div class="mb-2 text-sm text-slate-400">Halo, <span class="text-amber-500">{{ Auth::user()->name }}</span></div>
-                                @if(Auth::user()->isAdmin())
-                                    <a href="{{ route('admin.dashboard') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 hover:text-amber-400 transition-colors">Admin Dasbor</a>
-                                @else
-                                    <a href="{{ route('dashboard') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-amber-500 hover:bg-white/10 hover:text-amber-400 transition-colors">Dasbor Saya</a>
-                                @endif
-                                <form method="POST" action="{{ route('logout') }}" class="mt-2">
-                                    @csrf
-                                    <button type="submit" class="-mx-3 block w-full text-left rounded-lg px-3 py-3 text-base font-semibold leading-7 text-slate-400 hover:bg-white/10 hover:text-red-400 transition-colors">Keluar</button>
-                                </form>
-                            @else
-                                <a href="{{ route('login') }}" class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-slate-300 hover:bg-white/10 hover:text-white transition-colors">Masuk</a>
-                                <a href="{{ route('register') }}" class="mt-2 block w-full rounded-md bg-amber-600 px-3 py-3 text-center text-sm font-semibold text-white hover:bg-amber-500 transition-colors">Mendaftar</a>
-                            @endauth
-                        </div>
-                    </div>
-                </div>
+        {{-- Mobile Drawer: Side Panel (dari KIRI, full-height) --}}
+        <div :style="mobileMenuOpen ? 'transform:translateX(0)' : 'transform:translateX(-100%)'"
+             style="position:fixed;top:0;left:0;height:100vh;width:285px;background:#050508;border-right:1px solid rgba(255,255,255,0.08);z-index:999;overflow-y:auto;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);">
+
+            {{-- Header Panel --}}
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:1.5rem 1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,0.06);">
+                <span class="font-serif tracking-widest text-white" style="font-size:1.1rem;">ONEE<span class="text-amber-500">MAGIC</span></span>
+                <button @click="mobileMenuOpen = false" style="color:#94a3b8;padding:0.25rem;background:none;border:none;cursor:pointer;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">
+                    <svg style="width:1.4rem;height:1.4rem;" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            {{-- Nav Links --}}
+            <nav style="padding:1rem 0.75rem;display:flex;flex-direction:column;gap:0.25rem;">
+                <a href="{{ route('home') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f1f5f9;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">🏠 Beranda</a>
+                @auth
+                    <a href="{{ route('magic_lab.index') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f1f5f9;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">✨ Magic Lab</a>
+                    <a href="{{ route('journal.index') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f1f5f9;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">📖 Jurnal</a>
+                    <a href="{{ route('booking.create') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f59e0b;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">🎭 Pemesanan</a>
+                @else
+                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" style="display:block;width:100%;text-align:left;padding:0.75rem 1rem;border-radius:0.5rem;color:#f1f5f9;font-weight:600;font-size:0.95rem;background:none;border:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">✨ Magic Lab</button>
+                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" style="display:block;width:100%;text-align:left;padding:0.75rem 1rem;border-radius:0.5rem;color:#f1f5f9;font-weight:600;font-size:0.95rem;background:none;border:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">📖 Jurnal</button>
+                    <button type="button" @click="$dispatch('open-login-modal'); mobileMenuOpen = false" style="display:block;width:100%;text-align:left;padding:0.75rem 1rem;border-radius:0.5rem;color:#f59e0b;font-weight:600;font-size:0.95rem;background:none;border:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">🎭 Pemesanan</button>
+                @endauth
+            </nav>
+
+            {{-- Divider --}}
+            <div style="height:1px;background:rgba(255,255,255,0.07);margin:0 1.25rem;"></div>
+
+            {{-- Auth Section --}}
+            <div style="padding:1rem 0.75rem;display:flex;flex-direction:column;gap:0.25rem;">
+                @auth
+                    <div style="padding:0.5rem 1rem;font-size:0.8rem;color:#94a3b8;">Halo, <span style="color:#f59e0b;font-weight:600;">{{ Auth::user()->name }}</span></div>
+                    @if(Auth::user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f59e0b;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">⚙️ Admin Dasbor</a>
+                    @else
+                        <a href="{{ route('dashboard') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f59e0b;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">👤 Dasbor Saya</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" style="display:block;width:100%;text-align:left;padding:0.75rem 1rem;border-radius:0.5rem;color:#94a3b8;font-weight:600;font-size:0.95rem;background:none;border:none;cursor:pointer;transition:background 0.15s,color 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)';this.style.color='#f87171'" onmouseout="this.style.background='transparent';this.style.color='#94a3b8'">🚪 Keluar</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" style="display:block;padding:0.75rem 1rem;border-radius:0.5rem;color:#f1f5f9;font-weight:600;font-size:0.95rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='transparent'">🔑 Masuk</a>
+                    <a href="{{ route('register') }}" style="display:block;margin-top:0.5rem;padding:0.75rem 1rem;border-radius:0.5rem;background:#d97706;color:white;font-weight:600;font-size:0.95rem;text-decoration:none;text-align:center;transition:background 0.15s;" onmouseover="this.style.background='#b45309'" onmouseout="this.style.background='#d97706'">Mendaftar</a>
+                @endauth
             </div>
         </div>
     </header>
